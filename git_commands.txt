@@ -1,9 +1,8 @@
 GIT COMMANDS USED IN THE ASSIGNMENT (Question 1)
 =================================================
 Every Git (and GitHub CLI) command used while doing the assignment is listed below
-in the order it was run, with a short explanation. Plain shell helpers used only to
-create or inspect files (mkdir, cd, ls, cat, sed, echo, printf, tail, pwd) are not Git
-commands and are not documented here.
+in the order it was run, with a short explanation. The plain shell commands used to
+create, edit and inspect files are listed in the last section (they are not Git commands).
 
 STEP 1: Local repository setup
 ------------------------------
@@ -132,3 +131,42 @@ git add git_commands.txt
 
 git commit -m "Add git_commands.txt documenting all Git commands used"
     Commits the documentation file before pushing.
+
+git commit -m "Document shell helper commands in git_commands.txt"
+    Commits the updated documentation (now also listing the shell helper commands).
+
+git push origin main
+    Pushes the new commit on main to GitHub (the upstream was already set earlier).
+
+SHELL HELPER COMMANDS (not Git commands)
+----------------------------------------
+mkdir -p ~/projects/git-workflow-assignment
+    Creates the project folder on the local machine (-p: no error if it already exists).
+
+cd ~/projects/git-workflow-assignment
+    Moves into the project folder so Git commands run inside it.
+
+pwd
+    Prints the current folder to confirm the location.
+
+ls -la    /    ls -a
+    Lists folder contents, including hidden entries such as .git and .gitignore.
+
+cat index.html    /    cat about.html    /    cat .gitignore
+    Prints a file's contents to the screen.
+
+sed -i '' 's|old text|new text|' index.html    (also used on about.html)
+    Edits a file in place to make the modification that gets committed.
+
+echo '<!-- experimental change -->' >> index.html    (also used on about.html)
+    Appends a line to a file, creating the experimental change that is later undone.
+
+printf '# Ignore log files\n*.log\n\n# Ignore temp folder\ntemp/\n' > .gitignore
+    Creates the .gitignore file with the two ignore rules.
+
+echo "debug output" > debug.log    /    mkdir temp && echo "scratch" > temp/cache.txt
+    Creates a .log file and a temp/ folder with a file in it, to prove they are ignored.
+
+tail -n 3 index.html    (also used on about.html)
+    Prints the last three lines of a file to show its state after an undo.
+
