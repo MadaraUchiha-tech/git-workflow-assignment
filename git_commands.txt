@@ -82,8 +82,8 @@ git add index.html
 git commit -m "Add experimental comment to index.html"
     Makes the additional commit that will be undone.
 
-git log --oneline -n 3
-    Shows the last three commits so the state before and after the undo can be compared.
+git log --oneline -n 3    (also run as: git log --oneline -n 4)
+    Shows the last three (or four) commits so the state before and after each undo can be compared.
 
 git reset --hard HEAD~1
     Undoes the last commit: moves the branch back one commit and discards that commit's changes from the working tree.
@@ -135,8 +135,11 @@ git commit -m "Add git_commands.txt documenting all Git commands used"
 git commit -m "Document shell helper commands in git_commands.txt"
     Commits the updated documentation (now also listing the shell helper commands).
 
+git commit -m "Note the git log -n 4 variant in git_commands.txt"
+    Commits a final correction so the documentation lists every variant of the commands used.
+
 git push origin main
-    Pushes the new commit on main to GitHub (the upstream was already set earlier).
+    Pushes the new commits on main to GitHub (the upstream was already set earlier).
 
 SHELL HELPER COMMANDS (not Git commands)
 ----------------------------------------
