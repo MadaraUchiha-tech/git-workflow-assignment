@@ -1,0 +1,134 @@
+GIT COMMANDS USED IN THE ASSIGNMENT (Question 1)
+=================================================
+Every Git (and GitHub CLI) command used while doing the assignment is listed below
+in the order it was run, with a short explanation. Plain shell helpers used only to
+create or inspect files (mkdir, cd, ls, cat, sed, echo, printf, tail, pwd) are not Git
+commands and are not documented here.
+
+STEP 1: Local repository setup
+------------------------------
+git init -b main
+    Initialises an empty Git repository in the project folder and names the default branch "main".
+
+git status
+    Shows which files are untracked, staged or modified, and which branch is checked out.
+
+STEP 2: Git workflow execution
+------------------------------
+git add index.html about.html
+    Stages both HTML files so they are included in the next commit.
+
+git commit -m "Initial commit: add index.html and about.html"
+    Records the staged files as the first commit (the initial state of the project).
+
+git log --oneline
+    Prints a compact one-line-per-commit history of the current branch.
+
+git diff
+    Shows the unstaged line-by-line changes made to index.html before committing.
+
+git add index.html
+    Stages the modified index.html.
+
+git commit -m "Update home page text in index.html"
+    Creates the second commit containing the modification to index.html.
+
+git branch feature
+    Creates a new branch called "feature" at the current commit.
+
+git branch
+    Lists local branches; the one marked with * is currently checked out.
+
+git switch feature
+    Switches the working directory to the feature branch.
+
+git add about.html
+    Stages the change made to about.html on the feature branch.
+
+git commit -m "Add contact section to about.html on feature branch"
+    Commits the change to the feature branch only; main is unaffected.
+
+git switch main
+    Switches back to the main branch (it does not yet contain the feature commit).
+
+git merge --no-ff feature -m "Merge branch feature into main"
+    Merges feature into main. --no-ff forces a real merge commit so the branch activity stays visible in history.
+
+git log --oneline --graph --decorate --all
+    Shows the history of all branches as an ASCII graph with branch and HEAD labels.
+
+STEP 3: .gitignore
+------------------
+git status --short
+    Compact status. Before the .gitignore is added, debug.log and temp/ are already not listed because they match its rules.
+
+git check-ignore -v debug.log temp/cache.txt
+    Prints which .gitignore rule (file and line) causes each path to be ignored.
+
+git add .gitignore
+    Stages the new .gitignore file (it ignores *.log files and the temp/ folder).
+
+git commit -m "Add .gitignore to ignore *.log files and temp/ folder"
+    Commits the .gitignore so the ignore rules are version controlled.
+
+git status
+    Confirms the working tree is clean even though debug.log and temp/ exist on disk.
+
+STEP 4: Undo operations
+-----------------------
+Undo 1: local, unpublished commit removed with git reset
+git add index.html
+    Stages a small experimental change to index.html.
+
+git commit -m "Add experimental comment to index.html"
+    Makes the additional commit that will be undone.
+
+git log --oneline -n 3
+    Shows the last three commits so the state before and after the undo can be compared.
+
+git reset --hard HEAD~1
+    Undoes the last commit: moves the branch back one commit and discards that commit's changes from the working tree.
+
+git reflog -n 5
+    Shows the recent movements of HEAD, proving the undone commit existed and was reset.
+
+Undo 2: published-style undo with git revert (visible in the GitHub history)
+git add about.html
+    Stages another experimental change, this time to about.html.
+
+git commit -m "Add experimental banner to about.html"
+    Makes a second additional commit.
+
+git revert --no-edit HEAD
+    Undoes the last commit by creating a new "Revert ..." commit that reverses it. History is preserved, so the undo is visible on GitHub.
+
+STEP 5: GitHub integration
+--------------------------
+gh repo create git-workflow-assignment --public
+    (GitHub CLI, not Git.) Creates an empty public repository on GitHub, only after the local repository was complete.
+
+git remote add origin https://github.com/MadaraUchiha-tech/git-workflow-assignment.git
+    Connects the local repository to the GitHub repository under the name "origin".
+
+git remote -v
+    Lists the configured remotes and their fetch/push URLs.
+
+git push -u origin main feature
+    Pushes the main and feature branches to GitHub and sets main to track origin/main.
+
+git ls-remote --heads origin
+    Lists the branches that exist on GitHub with their commit hashes, to verify the push.
+
+gh repo view --json visibility,url
+    (GitHub CLI.) Confirms the repository URL and that its visibility is PUBLIC.
+
+git status -sb
+    Short status with branch info; shows main is in sync with origin/main.
+
+STEP 6: Documentation
+---------------------
+git add git_commands.txt
+    Stages this documentation file.
+
+git commit -m "Add git_commands.txt documenting all Git commands used"
+    Commits the documentation file before pushing.
